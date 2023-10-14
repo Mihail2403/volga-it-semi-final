@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from accounts import urls as accUrls
+from . import urlsAdmin 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/Admin/', include(urlsAdmin.urlpatterns)),
     path('api/Accounts/', include(accUrls.urlpatterns))
 ]
