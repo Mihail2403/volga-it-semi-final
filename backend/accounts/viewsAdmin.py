@@ -153,9 +153,7 @@ class AccountDetailAPIView(APIView):
             account = Account.objects.get(id=id)
             account.user.delete()
             account.delete()
-            return response.Response({
-                "status": "good"
-            })
+            return response.Response({})
 
         except Account.DoesNotExist:
             return response.Response({
