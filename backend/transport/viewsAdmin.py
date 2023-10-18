@@ -23,20 +23,26 @@ class TransportListAndAddAPIView(APIView):
             return response.Response({
                 "err": "you dont give 'start' or 'count'",
                 "err_code": "not_start_or_count"
-            })
+            },
+            status=400
+            )
         
         except ValueError:
             return response.Response({
                 "err": "'start' and 'count' must be integer type",
                 "err_code": "incorrect_start_or_count"
-            })
+            },
+            status=400
+            )
 
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         
     def post(self, request):
         try:
@@ -46,7 +52,9 @@ class TransportListAndAddAPIView(APIView):
                 return response.Response({
                     "err": "Set dayPrice or dayPrice please",
                     "err_code": "minute_and_day_price_cant_be_null_simultaneous"
-                })
+                },
+            status=400
+            )
             else:
                 owner = Account.objects.get(id=request.data.get('ownerId'))
                 transportType = TransportType.objects.get(
@@ -73,42 +81,56 @@ class TransportListAndAddAPIView(APIView):
                 return response.Response({
                     "err": "field 'identifier' must be unique",
                     "err_code":"identifier_not_unique"
-                })
+                },
+            status=400
+            )
             
             # если IntegrityError, но identifier уникален
             return response.Response({
                 "err": "You give me unexpected value",
                 "err_code":"unexpected_value"
-            })
+            },
+            status=400
+            )
         # если тип транспорта не ожидаемый
         except TransportType.DoesNotExist:
             return response.Response({
                 "err": "transportType may be Car\Bike\Scooter",
                 "err_code": "transport_type_not_exist"
-            })
+            },
+            status=400
+            )
         except Account.DoesNotExist:
             return response.Response({
                 "err": "account with this id not exists",
                 "err_code": "account_not_exist"
-            })
+            },
+            status=400
+            )
         except TypeError:
             return response.Response({
                 "err": "type error",
                 "err_code":"type_err"
-            })
+            },
+            status=400
+            )
         
         except DataError:
             return response.Response({
                 "err": "type error, may be you give the number is too large",
                 "err_code":"num_is_too_large"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
 
 class TransportDetailView(APIView):
     permission_classes = [IsAdminUser, ]
@@ -178,41 +200,55 @@ class TransportDetailView(APIView):
             return response.Response({
                 "err": "You give me unexpected value",
                 "err_code":"unexpected_value"
-            })
+            },
+            status=400
+            )
         
         # если тип транспорта не ожидаемый
         except TransportType.DoesNotExist:
             return response.Response({
                 "err": "transportType may be Car\Bike\Scooter",
                 "err_code": "transport_type_not_exist"
-            })
+            },
+            status=400
+            )
         
         except TypeError:
             return response.Response({
                 "err": "type error",
                 "err_code":"type_err"
-            })
+            },
+            status=400
+            )
         except Account.DoesNotExist:
             return response.Response({
                 "err": "account with this id not exists",
                 "err_code": "account_not_exist"
-            })
+            },
+            status=400
+            )
         except DataError:
             return response.Response({
                 "err": "type error, may be you give the number is too large",
                 "err_code":"num_is_too_large"
-            })
+            },
+            status=400
+            )
         except Transport.DoesNotExist:
             return response.Response({
                 "err": "Transport with this id not exists",
                 "err_code":"transport_not_exists"
-            })
+            },
+            status=400
+            )
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         
     def delete(self, request, id):
         try:
@@ -224,11 +260,15 @@ class TransportDetailView(APIView):
             return response.Response({
                 "err": "Transport with this id not exists",
                 "err_code":"transport_not_exists"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )

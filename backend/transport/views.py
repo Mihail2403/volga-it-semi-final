@@ -83,42 +83,56 @@ class TransportDetailAPIView(APIView):
             return response.Response({
                 "err": "You give me unexpected value",
                 "err_code":"unexpected_value"
-            })
+            },
+            status=400
+            )
         
         # если тип транспорта не ожидаемый
         except TransportType.DoesNotExist:
             return response.Response({
                 "err": "transportType may be Car\Bike\Scooter",
                 "err_code": "transport_type_not_exist"
-            })
+            },
+            status=400
+            )
         
         except TypeError:
             return response.Response({
                 "err": "type error",
                 "err_code":"type_err"
-            })
+            },
+            status=400
+            )
         
         except DataError:
             return response.Response({
                 "err": "type error, may be you give the number is too large",
                 "err_code":"num_is_too_large"
-            })
+            },
+            status=400
+            )
         except Transport.DoesNotExist:
             return response.Response({
                 "err": "Transport with this id not exists",
                 "err_code":"transport_not_exists"
-            })
+            },
+            status=400
+            )
         except APIException:
             return response.Response({
                 "err": "You dont have permissions on this action",
                 "err_code":"havent_permission"
-            })
+            },
+            status=400
+            )
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
     # удаление
     def delete(self, request, id):
         try:
@@ -131,20 +145,26 @@ class TransportDetailAPIView(APIView):
             return response.Response({
                 "err": "Transport with this id not exists",
                 "err_code":"transport_not_exists"
-            })
+            },
+            status=400
+            )
 
         except APIException:
             return response.Response({
                 "err": "You dont have permissions on this action",
                 "err_code":"havent_permission"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
 
 class TransportAddAPIView(APIView):
     permission_classes = [IsAuthenticated, ]
@@ -156,7 +176,9 @@ class TransportAddAPIView(APIView):
                 return response.Response({
                     "err": "Set dayPrice or dayPrice please",
                     "err_code": "minute_and_day_price_cant_be_null_simultaneous"
-                })
+                },
+            status=400
+            )
             else:
                 owner = Account.objects.get(user=request.user)
                 transportType = TransportType.objects.get(
@@ -181,31 +203,41 @@ class TransportAddAPIView(APIView):
             return response.Response({
                 "err": "You give me unexpected value",
                 "err_code":"unexpected_value"
-            })
+            },
+            status=400
+            )
                     
         # если тип транспорта не ожидаемый
         except TransportType.DoesNotExist:
             return response.Response({
                 "err": "transportType may be Car\Bike\Scooter",
                 "err_code": "transport_type_not_exist"
-            })
+            },
+            status=400
+            )
         
         except TypeError:
             return response.Response({
                 "err": "type error",
                 "err_code":"type_err"
-            })
+            },
+            status=400
+            )
         
         except DataError:
             return response.Response({
                 "err": "type error, may be you give the number is too large",
                 "err_code":"num_is_too_large"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server",
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         

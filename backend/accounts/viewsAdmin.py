@@ -24,20 +24,26 @@ class AccountListAPIView(APIView):
             return response.Response({
                 "err": "you dont give 'start' or 'count'",
                 "err_code": "not_start_or_count"
-            })
+            },
+            status=400
+            )
         
         except ValueError:
             return response.Response({
                 "err": "'start' and 'count' must be integer type",
                 "err_code": "incorrect_start_or_count"
-            })
+            },
+            status=400
+            )
 
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         
     def post(self, request):
         try:
@@ -58,26 +64,34 @@ class AccountListAPIView(APIView):
             return response.Response({
                 "err": "you don't, give me 'username' or 'password' or 'isAdmin' or 'balance'", 
                 "err_code":"not_uname_or_pass"
-            })
+            },
+            status=400
+            )
 
         except ValueError:
             return response.Response({
                 "err": "'balance' must be double type",
                 "err_code": "incorrect_type_of_balance"
-            })
+            },
+            status=400
+            )
 
         except IntegrityError:
             return response.Response({
                 "err": "field 'username' must be unique", 
                 "err_code":"uname_not_unique"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
     
 class AccountDetailAPIView(APIView):
     permission_classes = [IsAdminUser, ]
@@ -90,14 +104,18 @@ class AccountDetailAPIView(APIView):
             return response.Response({
                 "err": "Account about id does not exist",
                 "err_code": "acc_doesnt_exist"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         
     def put(self, request, id):
         
@@ -125,7 +143,9 @@ class AccountDetailAPIView(APIView):
             return response.Response({
                 "err": "you don't, give me 'username' or 'password' or 'isAdmin' or 'balance'", 
                 "err_code":"not_uname_or_pass"
-            })
+            },
+            status=400
+            )
 
         except IntegrityError:
             return response.Response({
@@ -137,14 +157,18 @@ class AccountDetailAPIView(APIView):
             return response.Response({
                 "err": "Account about id does not exist",
                 "err_code": "acc_doesnt_exist"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
 
 
     def delete(self, request, id):
@@ -159,12 +183,16 @@ class AccountDetailAPIView(APIView):
             return response.Response({
                 "err": "Account about id does not exist",
                 "err_code": "acc_doesnt_exist"
-            })
+            },
+            status=400
+            )
 
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
         

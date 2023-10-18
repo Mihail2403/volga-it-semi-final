@@ -12,7 +12,7 @@ class MeAPIView(APIView):
     def get(self, request):
         try:
             user = request.user
-            account = Account(user=user)
+            account = Account.objects.get(user=user)
             return response.Response({
                 "person": {
                     "id":account.id,
@@ -25,7 +25,9 @@ class MeAPIView(APIView):
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
 
 
 class SignUpAPIView(APIView):
@@ -48,20 +50,26 @@ class SignUpAPIView(APIView):
             return response.Response({
                 "err": "you don't, give me 'username' or 'password'", 
                 "err_code":"not_uname_or_pass"
-            })
+            },
+            status=400
+            )
 
         except IntegrityError:
             return response.Response({
                 "err": "field 'username' must be unique", 
                 "err_code":"uname_not_unique"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
 
 class UpdateAccAPIView(APIView):
     permission_classes = [IsAuthenticated,]
@@ -83,17 +91,23 @@ class UpdateAccAPIView(APIView):
             return response.Response({
                 "err": "you don't, give me 'username' or 'password'", 
                 "err_code":"not_uname_or_pass"
-            })
+            },
+            status=400
+            )
 
         except IntegrityError:
             return response.Response({
                 "err": "field 'username' must be unique", 
                 "err_code":"uname_not_unique"
-            })
+            },
+            status=400
+            )
         
         except Exception as ex:
             print(ex)
             return response.Response({
                 "err": "unknown error on server", 
                 "err_code":"unknown_serv_err"
-            })
+            },
+            status=400
+            )
