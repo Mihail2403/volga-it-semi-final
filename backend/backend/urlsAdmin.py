@@ -6,5 +6,5 @@ from rent import urlsAdmin as rentUrls
 urlpatterns = [
     path('Account/', include(accountUrls.urlpatterns)),
     path('Transport/', include(transportUrls.urlpatterns)),
-    path('Rent', include(rentUrls.urlpatterns))
+    path('Rent/', include(rentUrls.urlpatterns))
 ]

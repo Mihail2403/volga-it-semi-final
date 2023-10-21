@@ -8,10 +8,12 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from accounts.models import Account
 from accounts.serializers import AccountSerializer
+from backend.errorCheck import accErrCheck
 
 
 class AccountListAPIView(APIView):
     permission_classes = [IsAdminUser, ]
+    @accErrCheck
     def get(self, request):
         try:
             start = int(request.GET['start'])
@@ -44,7 +46,7 @@ class AccountListAPIView(APIView):
             },
             status=400
             )
-        
+    @accErrCheck
     def post(self, request):
         try:
             user = User.objects.create_user(
@@ -95,6 +97,7 @@ class AccountListAPIView(APIView):
     
 class AccountDetailAPIView(APIView):
     permission_classes = [IsAdminUser, ]
+    @accErrCheck
     def get(self, request, id):
         try:
             account = Account.objects.get(id=id)
@@ -116,7 +119,7 @@ class AccountDetailAPIView(APIView):
             },
             status=400
             )
-        
+    @accErrCheck
     def put(self, request, id):
         
         try:
@@ -153,13 +156,7 @@ class AccountDetailAPIView(APIView):
                 "err_code":"uname_not_unique"
             })
 
-        except Account.DoesNotExist:
-            return response.Response({
-                "err": "Account about id does not exist",
-                "err_code": "acc_doesnt_exist"
-            },
-            status=400
-            )
+
         
         except Exception as ex:
             print(ex)
@@ -170,29 +167,10 @@ class AccountDetailAPIView(APIView):
             status=400
             )
 
-
+    @accErrCheck
     def delete(self, request, id):
-        try:
-
             account = Account.objects.get(id=id)
             account.user.delete()
             account.delete()
             return response.Response({})
-
-        except Account.DoesNotExist:
-            return response.Response({
-                "err": "Account about id does not exist",
-                "err_code": "acc_doesnt_exist"
-            },
-            status=400
-            )
-
-        except Exception as ex:
-            print(ex)
-            return response.Response({
-                "err": "unknown error on server", 
-                "err_code":"unknown_serv_err"
-            },
-            status=400
-            )
         

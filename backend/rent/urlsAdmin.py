@@ -1,3 +1,11 @@
 from django.urls import include, path
+from .viewsAdmin import RentDetailView, UserHistoryAPIView, TransportRentHistory, NewRentAPIView, EndRentAPIView
 
-urlpatterns = []
+
+urlpatterns = [
+    path('<int:rentId>/', RentDetailView.as_view()),
+    path('<int:userId>/', UserHistoryAPIView.as_view()),
+    path('<int:transportId>/', TransportRentHistory.as_view()),
+    path('', NewRentAPIView.as_view()),
+    path('End/<int:rentId>/', EndRentAPIView.as_view())
+]
