@@ -12,10 +12,10 @@ class PaymentHesoyamAPIView(APIView):
         """Добавление к балансу пользователя 250'000 денежных единиц"""
         if request.user.is_staff:
             acc = Account.objects.get(id=accountId)
-            acc.balance+=250000
+            acc.balance+=(250000*100)
             acc.save()
         else:
             acc = Account.objects.get(user=request.user)
-            acc.balance+=250000
+            acc.balance+=(250000*100)
             acc.save()
         return response.Response({})

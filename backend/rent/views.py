@@ -10,7 +10,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from backend.errorCheck import rentErrCheck
 from accounts.models import Account
-from rent.permissions import IsRenter
+from .permissions import IsRenter, IsRenterOrOwner
 from transport.permissions import IsAuthAndNotOwner, IsOwnerOrNotAllow
 from transport.serializers import TransportSerializer
 from transport.models import Transport, TransportType
@@ -48,33 +48,55 @@ class GetTransportForRentAPIView(APIView):
         
         # тип транспорта
         typeStr = request.GET['type']
-        transportType = TransportType.objects.get(name=typeStr)
         
         # а вот тут магия DjangoORM, если коротко, нахожу весь танспорт, подходящий под описанние
         # функции из модуля django.db.models.functions используются тк стандартные функции для тех действий не работают с объектами, оперируемыми в частности в .annotate()
-        transportList = Transport.objects.all().annotate(
-                    distance=
-                    # округляю до 5 знаков после запятой
-                    functions.Round(
-                        # корень
-                        functions.Sqrt(
-                            # помещаю итог в поле FloatField
-                            functions.Cast(
-                                    (lat - F('latitude'))**2.0 +
-                                    (long - F('longitude'))**2.0,
-                                FloatField()
+        if typeStr == "All":
+            transportList = Transport.objects.all().annotate(
+                        distance=
+                        # округляю до 5 знаков после запятой
+                        functions.Round(
+                            # корень
+                            functions.Sqrt(
+                                # помещаю итог в поле FloatField
+                                functions.Cast(
+                                        (lat - F('latitude'))**2.0 +
+                                        (long - F('longitude'))**2.0,
+                                    FloatField()
+                                )
+                                ), 5
                             )
-                            ), 5
-                        )
-                ).filter(
-                    transportType=transportType,
-                    canBeRented=True
-                ).filter(
-                    distance__lte=radius
-                )
+                    ).filter(
+                        canBeRented=True
+                    ).filter(
+                        distance__lte=radius
+                    )
+        else:
+            transportType = TransportType.objects.get(name=typeStr)
+            transportList = Transport.objects.all().annotate(
+                        distance=
+                        # округляю до 5 знаков после запятой
+                        functions.Round(
+                            # корень
+                            functions.Sqrt(
+                                # помещаю итог в поле FloatField
+                                functions.Cast(
+                                        (lat - F('latitude'))**2.0 +
+                                        (long - F('longitude'))**2.0,
+                                    FloatField()
+                                )
+                                ), 5
+                            )
+                    ).filter(
+                        transportType=transportType,
+                        canBeRented=True
+                    ).filter(
+                        distance__lte=radius
+                    )
         return response.Response(TransportSerializer(transportList, many=True).data)
 
 class GetInfoByIdAPIView(APIView):
+    permission_classes = [IsRenterOrOwner, ]
     @rentErrCheck
     def get(self, request, rentid):
         # получение объекта по id

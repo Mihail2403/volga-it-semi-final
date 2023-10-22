@@ -22,5 +22,5 @@ class UserSerializer(serializers.Serializer):
 
 class AccountSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    user = UserSerializer(required=False)
+    user = UserSerializer()
     balance = MyFloatField()

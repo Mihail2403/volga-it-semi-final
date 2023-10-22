@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 
 from accounts.models import Account
+from .serializers import AccountSerializer
 from backend.errorCheck import accErrCheck
 
 class MeAPIView(APIView):
@@ -14,13 +15,7 @@ class MeAPIView(APIView):
     def get(self, request):
         user = request.user
         account = Account.objects.get(user=user)
-        return response.Response({
-            "person": {
-                "id":account.id,
-                "username": user.username,
-                "balance":account.balance,
-            }
-        })
+        return response.Response(AccountSerializer(account).data)
         
 class SignUpAPIView(APIView):
     @accErrCheck
@@ -30,13 +25,7 @@ class SignUpAPIView(APIView):
         account = Account.objects.create(
             user=User.objects.create_user(username=uname, password=password)
             )
-        return response.Response({
-            "person": {
-                "id": account.id,
-                "name": account.user.username,
-                "balance": account.balance
-            }
-        })
+        return response.Response(AccountSerializer(account).data)
         
 class UpdateAccAPIView(APIView):
     permission_classes = [IsAuthenticated,]
@@ -46,10 +35,5 @@ class UpdateAccAPIView(APIView):
         user.username = request.data['username']
         user.set_password(request.data['password'])
         user.save()
-        return response.Response({
-            "person": {
-                "id": Account.objects.get(user=user).id,
-                "name": user.username,
-                "balance": Account.objects.get(user=user).balance
-            }
-        })
+        account = Account.objects.get(user=user)
+        return response.Response(AccountSerializer(account).data)

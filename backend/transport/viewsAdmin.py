@@ -16,7 +16,13 @@ class TransportListAndAddAPIView(APIView):
     def get(self, request):
         start = int(request.GET['start'])
         count = int(request.GET['count'])
-        queryset = Transport.objects.filter(id__gt=start)[:count]
+        transportType = request.GET['transportType']
+        if transportType == 'All':
+            queryset = Transport.objects.filter(id__gt=start)[:count]
+        else: 
+            queryset = Transport.objects.filter(
+                transportType=TransportType.objects.get(name=transportType)
+            ).filter(id__gt=start)[:count]
         return response.Response(
             TransportSerializer(queryset, many=True).data
         )

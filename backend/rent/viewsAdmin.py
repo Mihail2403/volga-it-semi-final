@@ -40,7 +40,7 @@ class RentDetailView(APIView):
         rent.date_started = timeStart
         rent.date_stop = timeEnd
         rent.rentType = RentType.objects.get(name=priceType)
-        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd else None
+        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and not (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
         rent.save()
         print(finalPrice)
 
@@ -90,13 +90,13 @@ class NewRentAPIView(APIView):
             date_started = timeStart, 
             date_stop = timeEnd
         )
-        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd else None
+        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and not (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
         rent.save()
         return response.Response(RentSerializer(rent).data)
 
 class EndRentAPIView(APIView):
     permission_classes=[IsAdminUser, ]
-    @rentErrCheck
+    # @rentErrCheck
     def post(self, request, rentId):
         """Завершение аренды по id"""
         rent = Rent.objects.get(id=rentId)

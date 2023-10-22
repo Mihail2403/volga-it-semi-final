@@ -6,3 +6,7 @@ class IsRenter(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return (request.user and obj.account.user == request.user)
+class IsRenterOrOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user and (request.user == obj.account.user or request.user == obj.transport.owner.user)
+    
