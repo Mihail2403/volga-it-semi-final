@@ -5,7 +5,7 @@ from rest_framework import renderers
 from .views import swagger_ui
 
 urlpatterns = [
-    path('docs/', TemplateView.as_view(
+    path('', TemplateView.as_view(
         template_name='docs/swagger.html',
         extra_context={'schema_url':'openapi-schema-json'}
     ), name='swagger-ui'),
