@@ -40,7 +40,7 @@ class RentDetailView(APIView):
         rent.date_started = timeStart
         rent.date_stop = timeEnd
         rent.rentType = RentType.objects.get(name=priceType)
-        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and not (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
+        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
         rent.save()
         print(finalPrice)
 
@@ -58,7 +58,7 @@ class UserHistoryAPIView(APIView):
     @rentErrCheck
     def get(self, request, userId):
         """Получение истории аренд пользователя"""
-        account = Account.objects.get(user=userId)
+        account = Account.objects.get(id=userId)
         rent = Rent.objects.filter(account=account)
         return response.Response(RentSerializer(rent, many=True).data)
 
@@ -83,14 +83,26 @@ class NewRentAPIView(APIView):
         priceOfUnit = request.data['priceOfUnit']
         priceType = request.data['priceType']
         finalPrice = request.data.get('finalPrice')
-        rent = Rent.objects.create(
-            account=Account.objects.get(id=userId),
-            rentType = RentType.objects.get(name=priceType),
-            transport = Transport.objects.get(id=transportId),
-            date_started = timeStart, 
-            date_stop = timeEnd
-        )
-        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and not (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
+        if timeEnd:
+            rent = Rent.objects.create(
+                account=Account.objects.get(id=userId),
+                rentType = RentType.objects.get(name=priceType),
+                transport = Transport.objects.get(id=transportId),
+                date_started = timeStart, 
+                date_stop = timeEnd
+            )
+        else:
+            transport = Transport.objects.get(id=transportId)
+            transport.canBeRented = False
+            transport.save()
+            rent = Rent.objects.create(
+                account=Account.objects.get(id=userId),
+                rentType = RentType.objects.get(name=priceType),
+                transport = transport,
+                date_started = timeStart, 
+                date_stop = timeEnd
+            )
+        rent.finalPrice = finalPriceCalc(rent, priceOfUnit, priceType) if timeEnd and (finalPrice or finalPrice == 0) else finalPrice * 100 if finalPrice != 0 else None
         rent.save()
         return response.Response(RentSerializer(rent).data)
 

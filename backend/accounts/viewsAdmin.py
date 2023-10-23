@@ -18,7 +18,7 @@ class AccountListAPIView(APIView):
         try:
             start = int(request.GET['start'])
             count = int(request.GET['count'])
-            queryset = Account.objects.filter(id__gt=start)[:count]
+            queryset = Account.objects.filter(id__gte=start)[:count]
             return response.Response(
                 AccountSerializer(queryset, many=True).data
             )

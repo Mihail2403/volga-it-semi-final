@@ -1,0 +1,2448 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "version": "0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "AccountController"
+    },
+    {
+      "name": "TransportController"
+    },
+    {
+      "name": "RentController"
+    },
+    {
+      "name": "PaymentController"
+    },
+    {
+      "name": "AdminController"
+    }
+  ],
+  "paths": {
+    "/Accounts/Me/": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "tags": [
+          "AccountController"
+        ],
+        "description": "Получение информации о текущем аккаунте",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Accounts/SignIn/": {
+      "post": {
+        "tags": [
+          "AccountController"
+        ],
+        "description": "Поучение нового jwt токена",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountToInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenReturns"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Accounts/SignUp/": {
+      "post": {
+        "tags": [
+          "AccountController"
+        ],
+        "description": "Регистрация аккаунта",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountToInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Accounts/Update/": {
+      "put": {
+        "tags": [
+          "AccountController"
+        ],
+        "description": "Обновление своего аккаунта",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountToInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Transport/{id}/": {
+      "get": {
+        "tags": [
+          "TransportController"
+        ],
+        "description": "Получение информации о транспорте по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Transport Id",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TransportController"
+        ],
+        "description": "Изменение информации о транспорте по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Transport Id",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TransportController"
+        ],
+        "description": "Удаление информации о транспорте по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Transport Id",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Transport/": {
+      "post": {
+        "tags": [
+          "TransportController"
+        ],
+        "description": "Добавление нового транспорта",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/Transport/": {
+      "get": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "Получение транспорта, находящегося в круге поиска",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "широта центра круга поиска транспорта",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "description": "долгота центра круга поиска транспорта",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "description": "радиус круга поиска транспорта",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Тип транспорта",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Car",
+                "Bike",
+                "Scooter",
+                "All"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportReturn"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/{rentId}/": {
+      "get": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "Информация об аренде по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/MyHistory/": {
+      "get": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "История аренд у пользователя",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/TransportHistory/{transportId}/": {
+      "get": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "История аренд транспотра по его id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transportId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/New/{transportId}/": {
+      "post": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "Создание новой аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transportId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "rentType": {
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Days"
+                    ],
+                    "example": "Minutes"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rent/End/{rentId}/": {
+      "post": {
+        "tags": [
+          "RentController"
+        ],
+        "description": "Окончание аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "example": 1234.12345
+            },
+            "required": true
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "example": 1234.12345
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Payment/Hesoyam/{accountId}/": {
+      "post": {
+        "tags": [
+          "PaymentController"
+        ],
+        "description": "Добавление на баланс денег",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Account/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Получение списка всех аккаунтов",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountToReturn"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Регистрация аккаунта админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "mic"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "isAdmin": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "balance": {
+                    "type": "number",
+                    "example": 788.55
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Account/{id}/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Получение информации об аккаунте по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Изменение аккаунта админом по id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "mic"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "isAdmin": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "balance": {
+                    "type": "number",
+                    "example": 788.55
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountToReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Регистрация аккаунта админом",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Transport/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Получение списка транспорта админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 2
+            },
+            "required": true
+          },
+          {
+            "name": "transportType",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Car",
+                "Bike",
+                "Scooter",
+                "All"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportReturn"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Создание транспорта админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ownerId": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "canBeRented": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "transportType": {
+                    "type": "string",
+                    "enum": [
+                      "Car",
+                      "Bike",
+                      "Scooter"
+                    ],
+                    "example": "Car"
+                  },
+                  "model": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "example": "Lada"
+                  },
+                  "color": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "example": "Red"
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "maxLength": 6,
+                    "example": "o000oo"
+                  },
+                  "description": {
+                    "nullable": true,
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "example": 1234.56789
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": 9876.12345
+                  },
+                  "minutePrice": {
+                    "nullable": true,
+                    "type": "number",
+                    "example": 120.5
+                  },
+                  "dayPrice": {
+                    "nullable": true,
+                    "type": "number",
+                    "example": 1200.5
+                  }
+                },
+                "required": [
+                  "canBeRented",
+                  "transportTypes",
+                  "model",
+                  "color",
+                  "identifier",
+                  "description",
+                  "latitude",
+                  "longitude"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Transport/{id}/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Получение транспорта админом по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Изменение транспорта админом по id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ownerId": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "canBeRented": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "transportType": {
+                    "type": "string",
+                    "enum": [
+                      "Car",
+                      "Bike",
+                      "Scooter"
+                    ],
+                    "example": "Car"
+                  },
+                  "model": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "example": "Lada"
+                  },
+                  "color": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "example": "Red"
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "maxLength": 6,
+                    "example": "o000oo"
+                  },
+                  "description": {
+                    "nullable": true,
+                    "type": "string",
+                    "maxLength": 150
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "example": 1234.56789
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": 9876.12345
+                  },
+                  "minutePrice": {
+                    "nullable": true,
+                    "type": "number",
+                    "example": 120.5
+                  },
+                  "dayPrice": {
+                    "nullable": true,
+                    "type": "number",
+                    "example": 1200.5
+                  }
+                },
+                "required": [
+                  "canBeRented",
+                  "transportTypes",
+                  "model",
+                  "color",
+                  "identifier",
+                  "description",
+                  "latitude",
+                  "longitude"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportReturn"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Создание транспорта админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Rent/{rentId}/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Информация об аренде по id админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Редактирование аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "transportId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "timeStart": {
+                    "type": "string",
+                    "example": "2023-10-17T04:25:46.000Z"
+                  },
+                  "timeEnd": {
+                    "nullable": true,
+                    "type": "string",
+                    "example": "2023-10-17T04:27:46.000Z"
+                  },
+                  "priceOfUnit": {
+                    "type": "number",
+                    "example": 40.56
+                  },
+                  "priceType": {
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Days"
+                    ],
+                    "example": "Minutes"
+                  },
+                  "finalPrice": {
+                    "type": "number",
+                    "example": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Удаление аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/UserHistory/{userId}/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "История аренд у пользователя админом",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 2
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/TransportHistory/{transportId}/": {
+      "get": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "История аренд транспотра по его id",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transportId",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Rent/": {
+      "post": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Создание новой аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "transportId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "userId": {
+                    "type": "integer"
+                  },
+                  "timeStart": {
+                    "type": "string",
+                    "example": "2023-10-17T04:25:46.000Z"
+                  },
+                  "timeEnd": {
+                    "nullable": true,
+                    "type": "string",
+                    "example": "2023-10-17T04:27:46.000Z"
+                  },
+                  "priceOfUnit": {
+                    "type": "number",
+                    "example": 40.56
+                  },
+                  "priceType": {
+                    "type": "string",
+                    "enum": [
+                      "Minutes",
+                      "Days"
+                    ],
+                    "example": "Minutes"
+                  },
+                  "finalPrice": {
+                    "type": "number",
+                    "example": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Admin/Rent/End/{rentId}/": {
+      "post": {
+        "tags": [
+          "AdminController"
+        ],
+        "description": "Завершение аренды",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rentId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "lat": {
+                    "type": "number",
+                    "example": 1234.56789
+                  },
+                  "long": {
+                    "type": "number",
+                    "example": 9876.54321
+                  }
+                },
+                "required": [
+                  "lat",
+                  "long"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "You have error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You have auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "err": {
+            "type": "string",
+            "example": "not error, just example"
+          },
+          "err_code": {
+            "type": "string",
+            "example": "not_err"
+          }
+        },
+        "required": [
+          "err",
+          "err_code"
+        ]
+      },
+      "UnauthorizedError": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "string",
+            "example": "Authentication credentials were not provided."
+          }
+        },
+        "required": [
+          "detail"
+        ]
+      },
+      "AccountToInput": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Justin"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "AccountToReturn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "mic"
+              },
+              "is_staff": {
+                "type": "boolean",
+                "example": false
+              }
+            }
+          },
+          "balance": {
+            "type": "number",
+            "multipleOf": 1.11,
+            "example": 1234.55
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "balance"
+        ]
+      },
+      "TokenReturns": {
+        "type": "object",
+        "properties": {
+          "access": {
+            "type": "string",
+            "example": "accesstokenaccesstokenaccesstokenaccesstokenaccesstokenaccesstokenaccesstokenaccesstoken"
+          }
+        },
+        "required": [
+          "access"
+        ]
+      },
+      "TransportReturn": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "canBeRented": {
+            "type": "boolean",
+            "example": true
+          },
+          "transportType": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "Car",
+                  "Bike",
+                  "Scooter"
+                ],
+                "example": "Car"
+              }
+            }
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Lada"
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Red"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 6,
+            "example": "o000oo"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string",
+            "maxLength": 150
+          },
+          "latitude": {
+            "type": "number",
+            "example": 1234.56789
+          },
+          "longitude": {
+            "type": "number",
+            "example": 9876.12345
+          },
+          "minutePrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 120.5
+          },
+          "dayPrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 1200.5
+          },
+          "owner": {
+            "$ref": "#/components/schemas/AccountToReturn"
+          }
+        },
+        "required": [
+          "canBeRented",
+          "transportType",
+          "model",
+          "color",
+          "identifier",
+          "description",
+          "latitude",
+          "longitude",
+          "owner"
+        ]
+      },
+      "TransportPutRequest": {
+        "type": "object",
+        "properties": {
+          "canBeRented": {
+            "type": "boolean",
+            "example": true
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Lada"
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Red"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 6,
+            "example": "o000oo"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string",
+            "maxLength": 150
+          },
+          "latitude": {
+            "type": "number",
+            "example": 1234.56789
+          },
+          "longitude": {
+            "type": "number",
+            "example": 9876.12345
+          },
+          "minutePrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 120.5
+          },
+          "dayPrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 1200.5
+          }
+        },
+        "required": [
+          "canBeRented",
+          "model",
+          "color",
+          "identifier",
+          "description",
+          "latitude",
+          "longitude"
+        ]
+      },
+      "TransportPostRequest": {
+        "type": "object",
+        "properties": {
+          "canBeRented": {
+            "type": "boolean",
+            "example": true
+          },
+          "transportType": {
+            "type": "string",
+            "enum": [
+              "Car",
+              "Bike",
+              "Scooter"
+            ],
+            "example": "Car"
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Lada"
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "Red"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 6,
+            "example": "o000oo"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string",
+            "maxLength": 150
+          },
+          "latitude": {
+            "type": "number",
+            "example": 1234.56789
+          },
+          "longitude": {
+            "type": "number",
+            "example": 9876.12345
+          },
+          "minutePrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 120.5
+          },
+          "dayPrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 1200.5
+          }
+        },
+        "required": [
+          "canBeRented",
+          "transportTypes",
+          "model",
+          "color",
+          "identifier",
+          "description",
+          "latitude",
+          "longitude"
+        ]
+      },
+      "RentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "account": {
+            "$ref": "#/components/schemas/AccountToReturn"
+          },
+          "transport": {
+            "$ref": "#/components/schemas/TransportReturn"
+          },
+          "date_started": {
+            "type": "string",
+            "example": "2023-10-17 09:25:46.000 +0500"
+          },
+          "date_stop": {
+            "type": "string",
+            "example": "2023-10-17 09:25:46.000 +0500"
+          },
+          "rentType": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "Minutes",
+                  "Days"
+                ],
+                "example": "Minutes"
+              }
+            }
+          },
+          "finalPrice": {
+            "nullable": true,
+            "type": "number",
+            "example": 123.67
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

@@ -126,7 +126,7 @@ class GetTransportRentHistory(APIView):
 class NewRentAPIView(APIView):
     """Создание новой аренды транспорта"""
     permission_classes = [IsAuthAndNotOwner, ]
-    @rentErrCheck
+    # @rentErrCheck
     def post(self, request, transportId):
         transport = Transport.objects.get(id=transportId)
         self.check_object_permissions(
